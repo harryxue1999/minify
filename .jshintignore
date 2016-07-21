@@ -1,0 +1,7 @@
+LICENSE
+.gitignore
+.jshintrc
+*.json
+*.md
+*.log
+node_modules/*

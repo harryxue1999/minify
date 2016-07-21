@@ -1,0 +1,22 @@
+{
+	"name": "minify",
+	"version": "0.1.0",
+	"description": "A requirejs plugin to load HTML/CSS in minified version",
+	"main": "minify.js",
+	"dependencies": {
+		"text": "requirejs/text"
+	},
+	"devDependencies": {
+        "requirejs": "^2.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/harryxue1999/minify.git"
+	},
+	"author": "Harry Xue",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/harryxue1999/minify/issues"
+	},
+	"homepage": "https://github.com/harryxue1999/minify#readme"
+}

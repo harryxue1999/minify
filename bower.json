@@ -1,0 +1,12 @@
+{
+	"name": "text",
+	"version": "2.0.15",
+	"main": "text.js",
+	"dependencies": {
+        "text": "https://github.com/requirejs/text.git",
+	},
+    "devDependencies": {
+        "requirejs": "^2.2.0"
+    },
+	"license": "MIT"
+}
