@@ -10,12 +10,12 @@ define(['text'], function (text) {
     var buildMap = {};
 
     /**
-     * Removes white space from a string (HTML and CSS only)
+     * Removes white space from a string (HTML and CSS only) on load
      *
      * @param {String} content The string to be trimmed and minified
      * @returns {String} Content that has been minified
      */
-    function minify (content) {
+    function minifyOnLoad (content) {
         return content.replace(/\r/g, "") // Carriage return
             .replace(/\n\s+/g, "") // New line followed by white space
             .replace(/\n/g, "") // Extra new lines
@@ -28,6 +28,16 @@ define(['text'], function (text) {
             .replace(/\s*<!--[^]*?-->\s*/g, ""); // HTML comments
     }
 
+    /**
+     * Properly escapes javascript's String on module build
+     *
+     * @param {String} content The string to be escaped during build
+     * @returns {String} Content that has been optimized for build
+     */
+    function minifyOnBuild (content) {
+        return content.replace(/\\/g, "\\\\"); // Escapes backslash (\)
+    }
+
     return {
         /**
          * Executes minify() when module is required
@@ -35,14 +45,14 @@ define(['text'], function (text) {
          * @param {String} name Name of this module
          * @param {Object} require The require object passed in by requirejs
          * @param {Function} onLoad Callback function to update content
-         * @param {Object} config Determine request type
+         * @param {Object} config Determine require type
          */
-        load: function (name, req, onLoad, config) {
+        load: function (name, require, onLoad, config) {
             if (config && config.isBuild && !config.inlineText) {
                 onLoad(null);
             } else {
                 text.get(require.toUrl(name), function (content) {
-                    buildMap[name] = minify(content);
+                    buildMap[name] = minifyOnLoad(content);
                     onLoad(buildMap[name]);
                 });
             }
@@ -57,7 +67,7 @@ define(['text'], function (text) {
          */
         write: function (pluginName, moduleName, write) {
             if (moduleName in buildMap) {
-                var content = buildMap[moduleName];
+                var content = minifyOnBuild(buildMap[moduleName]);
                 write("define('" + pluginName + "!" + moduleName
                     + "', function () { return '" + content + "';});\n");
             }
