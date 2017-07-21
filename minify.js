@@ -1,5 +1,5 @@
 /**
- * @license minify Copyright (c) 2016 Harry Xue
+ * @license minify Copyright (c) 2016-2017 Harry Xue
  * Licensed under the MIT License (MIT)
  */
 
@@ -20,7 +20,6 @@ define(['text'], function (text) {
             .replace(/\n\s+/g, "") // New line followed by white space
             .replace(/\n/g, "") // Extra new lines
             .replace(/\t/g, "") // Extra tabs
-            .replace(/'/g, "\\'") // Single quotes
             .replace(/\s*{/g, "{") // CSS open brace
             .replace(/\s*\:\s*/g, ":") // CSS definition colons
             .replace(/\s*;\s*/g, ";") // CSS semi-colons
@@ -35,7 +34,9 @@ define(['text'], function (text) {
      * @returns {String} Content that has been optimized for build
      */
     function minifyOnBuild (content) {
-        return content.replace(/\\/g, "\\\\"); // Escapes backslash (\)
+        return content
+            .replace(/\\/g, "\\\\") // Escapes backslash (\)
+            .replace(/'/g, "\\'"); // Single quotes
     }
 
     return {
